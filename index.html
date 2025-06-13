@@ -18,6 +18,7 @@
     <script defer src="./js/TweenLite.js"></script>
     <script defer src="./js/three.r112.js"></script>
     <script defer src="./js/windex.js"></script>
+    
     <style>
 
        .buttons {
@@ -300,6 +301,7 @@
                     <main id="about" class="page is-about" data-id="about" data-page-id="about" data-url="about"
                         data-title="热爱可抵漫长岁月！">
                         <!-- 第一节 -->
+                         
                             
 
                         <section id="about-hero" class="hero is-full">
@@ -336,12 +338,13 @@
                                             <h1 class="domain-name" id="domainName">星耀系列</h1><h2 class="chtitle"></h2>
                                             <h1 class="domain-name" id="domainName">点击下方按钮获取邀请码，WX扫码注册</h1>
                                             <div id="linkbox">
-                                                <a href="https://xyjn.gzmaoning.com/uploads/qrcode/h5_agent_code_60590.png" target="_blank">
+                                                <a href="javascript:void(0)" style="color: white; text-decoration: none;" onclick="showImage1(); return false;">
                                                     <div class="item" style="--color: rgba(40, 169, 224,0.3)">
                                                         <div class="bg" style="background-color:rgb(40, 169, 224)"></div>
                                                         <div class="inner"><i class="fa-brands fa-x-twitter"></i><h2 class="text-lg font-bold">星耀金牛</h2></div>
                                                     </div>
                                                 </a>
+                                                
                                             </div>
                                         </div>
                                         <div class="featured-item" data-id="img-1" style="display: block;">
@@ -735,5 +738,34 @@
     </div>
     <!-- 鼠标追踪 -->
     <div id="cursor-follow" class="font-bold"></div>
+    <!-- 弹出图片的覆盖层 -->
+    <div id="imageOverlay1" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000;">
+        <img id="popupImage1" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);" src="" alt="Popup Image">
+        <a href="javascript:void(0)" onclick="closePopup()" style="position:absolute; top:10px; right:10px; color:white; font-size:24px;">&times;</a>
+    </div>
+    <script>
+        //微信图
+        function showImage1() {
+            var imagePath = "https://xyjn.gzmaoning.com/uploads/qrcode/h5_agent_code_60590.png";
+            document.getElementById('popupImage1').src = imagePath;
+            document.getElementById('imageOverlay1').style.display = 'block';
+        }
+    
+        document.getElementById('imageOverlay1').addEventListener('click', function() {
+            this.style.display = 'none';
+            document.getElementById('popupImage1').src = '';
+        });
+        //公众号图
+        function showImage2() {
+            var imagePath = "https://xyjn.gzmaoning.com/uploads/qrcode/h5_agent_code_60590.png";
+            document.getElementById('popupImage2').src = imagePath;
+            document.getElementById('imageOverlay2').style.display = 'block';
+        }
+    
+        document.getElementById('imageOverlay2').addEventListener('click', function() {
+            this.style.display = 'none';
+            document.getElementById('popupImage2').src = '';
+        });
+    </script>
 </body>
 </html>
