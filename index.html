@@ -7,44 +7,6 @@
     <link rel="icon" href="./assets/images/ewm.png">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
-    <!-- 配置Tailwind自定义颜色和字体 -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        neutral: '#64748B',
-                    },
-                    fontFamily: {
-                        inter: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .search-result-item {
-                @apply p-4 mb-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 bg-white/80 backdrop-blur-sm;
-            }
-            .search-highlight {
-                @apply bg-yellow-200 font-semibold;
-            }
-            .search-container {
-                @apply sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm;
-            }
-        }
-    </style>
-    
     <script>
         var ua = (navigator.userAgent || navigator.vendor || window.opera).toLowerCase();
         document.documentElement.className += /(iPad|iPhone|Android)/i.test(ua) ? ' is-mobile' : ' is-desktop';
@@ -325,35 +287,7 @@
 <body>
     <!-- 顶部 -->
     <header id="header" class="font-subheader cache">
-         <!-- 搜索区域 -->
-    <div class="search-container py-4 px-4 md:px-8">
-        <div class="max-w-4xl mx-auto">
-            <div class="relative">
-                <input 
-                    type="text" 
-                    id="search-input" 
-                    placeholder="搜索页面内容..." 
-                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary-2 focus:border-primary transition-all"
-                >
-                
-                <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover-none hover:hover:text-gray-600 transition-colors">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
-            <div id="search-stats" class="mt-2 text-sm text-gray-500 hidden">
-                找到 <span id="result-count">0</span> 个匹配结果
-            </div>
-        </div>
-    </div>
-
-    <!-- 搜索结果区域 -->
-    <div id="search-results" class="max-w-4xl mx-auto px-4 md:px-8 py-6 hidden">
-        <h2 class="text-xl font-bold mb-4 flex items-center">
-            <i class="fa fa-search mr-2 text-primary"></i>
-        </h2>
-        <div id="results-container" class="space-y-2"></div>
-    </div>
-
+        <h1 class="domain-name" id="domainName"></h1>
         <div id="header-menu-btn"></div>
     </header>
     <!-- 画布 -->
@@ -405,19 +339,19 @@
                                                 <a href="https://xyjn.gzmaoning.com/uploads/qrcode/h5_agent_code_60590.png" target="_blank">
                                                     <div class="item" style="--color:rgba(0, 102, 255,0.3)">
                                                         <div class="bg" style="background-color:rgb(40, 169, 224)"></div>
-                                                        <div class="inner"></i><h2 class="text-lg font-bold"><h2 class="domain-name" id="domainName">星耀系列</h2></h2></div>
+                                                        <div class="inner"> <i class="fa-brands fa-weixin"></i><h2 class="text-lg font-bold">星耀金牛</h2></div>
                                                     </div>
                                                 </a>
                                                 <a href="https://xytx.zzycf.com/uploads/qrcode/h5_agent_code_60590.png"  target="_blank">
                                                     <div class="item" style="--color:rgba(251, 114, 153,0.3)">
                                                         <div class="bg" style="background-color:rgb(0, 102, 255)"></div>
-                                                        <div class="inner"></i><h2 class="text-lg font-bold">星耀天蝎</h2></div>
+                                                        <div class="inner"><i class="fa-solid fa-square-envelope"></i><h2 class="text-lg font-bold">星耀天蝎</h2></div>
                                                     </div>
                                                 </a>
                                                 <a href="https://xymx.xingyaoapp.com/uploads/qrcode/h5_agent_code_60590.png" target="_blank">
                                                     <div class="item" style="--color:rgba(1, 193, 157,0.3)">
                                                         <div class="bg" style="background-color:rgb(35, 45, 55)"></div>
-                                                        <div class="inner"></i><h2 class="text-lg font-bold">星耀摩羯</h2></div>
+                                                        <div class="inner"> <i class="fa-solid fa-blog"></i><h2 class="text-lg font-bold">星耀摩羯</h2></div>
                                                     </div>
                                                 </a>
                                             </div>
@@ -849,176 +783,5 @@
     </div>
     <!-- 鼠标追踪 -->
     <div id="cursor-follow" class="font-bold"></div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 获取DOM元素
-            const searchInput = document.getElementById('search-input');
-            const clearSearch = document.getElementById('clear-search');
-            const searchResults = document.getElementById('search-results');
-            const resultsContainer = document.getElementById('results-container');
-            const searchStats = document.getElementById('search-stats');
-            const resultCount = document.getElementById('result-count');
-            
-            // 存储页面中可搜索的元素（包括标题、描述等文本内容）
-            const searchableElements = Array.from(document.querySelectorAll('h1, h2, h3, h4, p, .featured-item-desc, .contact-value'));
-            
-            // 清除搜索
-            const clearSearchResults = () => {
-                searchInput.value = '';
-                searchResults.classList.add('hidden');
-                searchStats.classList.add('hidden');
-                resultsContainer.innerHTML = '';
-                
-                // 恢复原始内容（移除高亮）
-                searchableElements.forEach(el => {
-                    if (el.dataset.originalHtml) {
-                        el.innerHTML = el.dataset.originalHtml;
-                    }
-                });
-            };
-            
-            // 执行搜索
-            const performSearch = (query) => {
-                if (!query.trim()) {
-                    clearSearchResults();
-                    return;
-                }
-                
-                // 保存原始HTML（如果尚未保存）
-                searchableElements.forEach(el => {
-                    if (!el.dataset.originalHtml) {
-                        el.dataset.originalHtml = el.innerHTML;
-                    }
-                });
-                
-                const lowerQuery = query.toLowerCase();
-                let results = [];
-                
-                // 搜索每个元素
-                searchableElements.forEach(el => {
-                    const text = el.textContent.toLowerCase();
-                    if (text.includes(lowerQuery)) {
-                        // 创建结果项
-                        const resultItem = {
-                            tag: el.tagName.toLowerCase(),
-                            text: el.textContent,
-                            element: el
-                        };
-                        results.push(resultItem);
-                        
-                        // 高亮匹配文本
-                        const regex = new RegExp(`(${query})`, 'gi');
-                        el.innerHTML = el.dataset.originalHtml.replace(regex, '<span class="search-highlight">$1</span>');
-                    } else {
-                        // 移除高亮
-                        el.innerHTML = el.dataset.originalHtml;
-                    }
-                });
-                
-                // 显示结果
-                resultCount.textContent = results.length;
-                searchStats.classList.remove('hidden');
-                
-                if (results.length > 0) {
-                    searchResults.classList.remove('hidden');
-                    resultsContainer.innerHTML = '';
-                    
-                    // 添加结果到结果容器
-                    results.forEach(result => {
-                        const resultEl = document.createElement('div');
-                        resultEl.className = 'search-result-item';
-                        
-                        // 截断文本，显示匹配上下文
-                        const maxContextLength = 150;
-                        const text = result.text;
-                        const queryIndex = text.toLowerCase().indexOf(lowerQuery);
-                        
-                        let start = Math.max(0, queryIndex - 50);
-                        let end = Math.min(text.length, queryIndex + query.length + 100);
-                        
-                        let context = text.substring(start, end);
-                        if (start > 0) context = '...' + context;
-                        if (end < text.length) context = context + '...';
-                        
-                        // 高亮结果中的匹配文本
-                        const regex = new RegExp(`(${query})`, 'gi');
-                        context = context.replace(regex, '<span class="search-highlight">$1</span>');
-                        
-                        resultEl.innerHTML = `
-                            <div class="font-medium text-primary mb-1">
-                                ${result.tag === 'h1' ? '标题 1' : 
-                                  result.tag === 'h2' ? '标题 2' : 
-                                  result.tag === 'h3' ? '标题 3' : 
-                                  result.tag === 'h4' ? '标题 4' : '段落'}
-                            </div>
-                            <div class="text-gray-700">${context}</div>
-                        `;
-                        
-                        // 点击结果滚动到对应位置
-                        resultEl.addEventListener('click', () => {
-                            result.element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            result.element.classList.add('bg-blue-50');
-                            setTimeout(() => {
-                                result.element.classList.remove('bg-blue-50');
-                            }, 2000);
-                        });
-                        
-                        resultsContainer.appendChild(resultEl);
-                    });
-                } else {
-                    resultsContainer.innerHTML = `
-                        <div class="text-center py-8 text-gray-500">
-                            <i class="fa fa-search-minus text-4xl mb-3"></i>
-                            <p>没有找到与"${query}"相关的内容</p>
-                        </div>
-                    `;
-                }
-            };
-            
-            // 事件监听
-            searchInput.addEventListener('input', (e) => {
-                performSearch(e.target.value);
-            });
-            
-            clearSearch.addEventListener('click', clearSearchResults);
-            
-            // 支持Enter键搜索
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    performSearch(searchInput.value);
-                }
-            });
-            
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-        // 获取搜索结果容器和搜索区域元素
-        const resultsContainer = document.getElementById('results-container');
-        const searchResults = document.getElementById('search-results');
-        const searchStats = document.getElementById('search-stats');
-    
-        // 为搜索结果容器添加点击事件委托
-        resultsContainer.addEventListener('click', function(e) {
-            // 查找被点击的结果项
-            const resultItem = e.target.closest('.search-result-item');
-            if (resultItem) {
-                // 隐藏搜索结果区域和统计信息
-                searchResults.classList.add('hidden');
-                searchStats.classList.add('hidden');
-                // 如果结果项包含链接，让浏览器完成跳转
-                const link = resultItem.querySelector('a');
-                if (link && link.href) {
-                    // 如果是页面内锚点，延迟一点关闭以确保跳转完成
-                    if (link.href.startsWith('#') || link.href.includes(window.location.host)) {
-                        setTimeout(() => {
-                            searchResults.classList.add('hidden');
-                            searchStats.classList.add('hidden');
-                        }, 300);
-                    }
-                }
-            }
-        });
-    });
-    </script>
 </body>
 </html>
